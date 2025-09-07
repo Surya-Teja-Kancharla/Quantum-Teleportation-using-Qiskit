@@ -128,6 +128,7 @@ qc.draw('mpl')</code></pre>
 alice_gates(qc, 0, 1)
 qc.draw('mpl')
 
+
 \# Step 3: Measure and send
 measure_and_send(qc, 0, 1)
 qc.draw('mpl')</code></pre>
