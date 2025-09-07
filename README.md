@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Teleportation with Qiskit</title>
 </head>
 <body>
 
@@ -129,7 +128,7 @@ qc.draw('mpl')</code></pre>
 alice_gates(qc, 0, 1)
 qc.draw('mpl')
 
-# Step 3: Measure and send
+\# Step 3: Measure and send
 measure_and_send(qc, 0, 1)
 qc.draw('mpl')</code></pre>
 
