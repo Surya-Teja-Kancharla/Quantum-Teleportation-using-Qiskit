@@ -23,17 +23,17 @@ requirements.txt
 <h2>Notebook Explanation</h2>
 
 <h3>1. Installing Necessary Libraries</h3>
-<p>The notebook begins with a magic command to install the required Qiskit libraries.  The <code>%pip install</code> command is a special instruction used in Jupyter notebooks to ensure that the packages are installed directly into the notebook's Python environment, making them immediately available for use[cite: 1, 2, 3, 4].</p>
+<p>The notebook begins with a magic command to install the required Qiskit libraries. The <code>%pip install</code> command is a special instruction used in Jupyter notebooks to ensure that the packages are installed directly into the notebook's Python environment, making them immediately available for use[cite: 1, 2, 3, 4].</p>
 <pre><code>%pip install qiskit qiskit-aer qiskit-ibm-provider</code></pre>
 <p>The packages installed are:</p>
 <ul>
-<li><strong><code>qiskit</code></strong>: This is the core Quantum SDK (Software Development Kit).  It provides the fundamental tools for writing quantum circuits, simulating them, and running them on real quantum computers[cite: 5, 6].</li>
-<li><strong><code>qiskit-aer</code></strong>: A high-performance simulator that allows you to run quantum circuits on your local computer's resources.  This is essential for testing and debugging circuits quickly without needing access to actual quantum hardware[cite: 7, 8].</li>
-<li><strong><code>qiskit-ibm-provider</code></strong>: This package is the bridge between Qiskit and IBM Quantum cloud services.  It enables you to connect to your IBM Quantum account and execute your quantum circuits on real IBM quantum computers or their managed simulators[cite: 9, 10].</li>
+<li><strong><code>qiskit</code></strong>: This is the core Quantum SDK (Software Development Kit). It provides the fundamental tools for writing quantum circuits, simulating them, and running them on real quantum computers[cite: 5, 6].</li>
+<li><strong><code>qiskit-aer</code></strong>: A high-performance simulator that allows you to run quantum circuits on your local computer's resources. This is essential for testing and debugging circuits quickly without needing access to actual quantum hardware[cite: 7, 8].</li>
+<li><strong><code>qiskit-ibm-provider</code></strong>: This package is the bridge between Qiskit and IBM Quantum cloud services. It enables you to connect to your IBM Quantum account and execute your quantum circuits on real IBM quantum computers or their managed simulators[cite: 9, 10].</li>
 </ul>
 
 <h3>2. Importing Libraries</h3>
-<p>After installation, the notebook imports several modules and classes to build the quantum teleportation circuit.  Each import serves a specific purpose in the protocol[cite: 13].</p>
+<p>After installation, the notebook imports several modules and classes to build the quantum teleportation circuit. Each import serves a specific purpose in the protocol[cite: 13].</p>
 <pre><code>import numpy as np
 from qiskit import QuantumCircuit, QuantumRegister, ClassicalRegister, transpile
 from qiskit_aer import AerSimulator
@@ -54,39 +54,39 @@ from qiskit.quantum_info import random_statevector</code></pre>
 </ul>
 
 <h3>3. Helper Functions</h3>
-<p>The notebook defines a set of helper functions that implement the core steps of the quantum teleportation protocol.  This modular approach makes the main circuit easier to read and understand[cite: 30, 31].</p>
+<p>The notebook defines a set of helper functions that implement the core steps of the quantum teleportation protocol. This modular approach makes the main circuit easier to read and understand[cite: 30, 31].</p>
 <ul>
-<li><strong><code>create_bell_pair(qc, a, b)</code></strong>: This function creates a maximally entangled Bell pair between two qubits, <code>a</code> and <code>b</code>.  It first applies a Hadamard (H) gate to qubit <code>a</code> to put it in a superposition, then uses a controlled-NOT (CX) gate with <code>a</code> as the control and <code>b</code> as the target to entangle them[cite: 32, 33, 34, 35].</li>
-<li><strong><code>alice_gates(qc, psi, a)</code></strong>: This function represents Alice's part of the protocol. It applies a CNOT gate with the message qubit <code>psi</code> as the control and her half of the Bell pair, <code>a</code>, as the target. It then applies a Hadamard gate to <code>psi</code>.  These gates entangle the message qubit with the Bell pair, spreading the quantum information across all three qubits in the system[cite: 36, 37, 38].</li>
-<li><strong><code>measure_and_send(qc, a, b)</code></strong>: Alice's measurement step. This function places a barrier and then measures her two qubits, <code>a</code> and <code>b</code>, storing the classical outcomes in two different classical registers (<code>crz</code> and <code>crx</code>).  These classical bits are the only information sent to Bob[cite: 39, 40].</li>
-<li><strong><code>bob_gates(qc, qubit, crz, crx)</code></strong>: Bob's correction step. Based on the classical bits sent by Alice (<code>crz</code> and <code>crx</code>), Bob applies conditional gates to his entangled qubit.  It applies an X gate if <code>crx</code> is 1 and a Z gate if <code>crz</code> is 1. These corrections ensure Bob's qubit is an exact replica of Alice's original state[cite: 41, 42, 43].</li>
+<li><strong><code>create_bell_pair(qc, a, b)</code></strong>: This function creates a maximally entangled Bell pair between two qubits, <code>a</code> and <code>b</code>. It first applies a Hadamard (H) gate to qubit <code>a</code> to put it in a superposition, then uses a controlled-NOT (CX) gate with <code>a</code> as the control and <code>b</code> as the target to entangle them[cite: 32, 33, 34, 35].</li>
+<li><strong><code>alice_gates(qc, psi, a)</code></strong>: This function represents Alice's part of the protocol. It applies a CNOT gate with the message qubit <code>psi</code> as the control and her half of the Bell pair, <code>a</code>, as the target. It then applies a Hadamard gate to <code>psi</code>. These gates entangle the message qubit with the Bell pair, spreading the quantum information across all three qubits in the system[cite: 36, 37, 38].</li>
+<li><strong><code>measure_and_send(qc, a, b)</code></strong>: Alice's measurement step. This function places a barrier and then measures her two qubits, <code>a</code> and <code>b</code>, storing the classical outcomes in two different classical registers (<code>crz</code> and <code>crx</code>). These classical bits are the only information sent to Bob[cite: 39, 40].</li>
+<li><strong><code>bob_gates(qc, qubit, crz, crx)</code></strong>: Bob's correction step. Based on the classical bits sent by Alice (<code>crz</code> and <code>crx</code>), Bob applies conditional gates to his entangled qubit. It applies an X gate if <code>crx</code> is 1 and a Z gate if <code>crz</code> is 1. These corrections ensure Bob's qubit is an exact replica of Alice's original state[cite: 41, 42, 43].</li>
  <li><strong><code>new_bob_gates(qc, a, b, c)</code></strong>: This is an alternative, more compact implementation of Bob's corrections that uses controlled gates (CNOT and CZ) instead of conditional classical logic, which is also a valid method for performing the same corrections[cite: 44, 45, 46].</li>
 </ul>
 
 <h3>4. Circuit Construction and Simulation</h3>
 
 <h4>4.1. Generating and Initializing the Random State</h4>
-<p>A random one-qubit quantum state, <code>psi</code>, is generated.  This state acts as the unknown quantum information that Alice wants to teleport[cite: 51, 52].  The notebook then uses <code>array_to_latex</code> to display its mathematical representation and <code>plot_bloch_multivector</code> to visualize its position on a Bloch sphere[cite: 54, 56].</p>
- <p>The state is then appended to the quantum circuit on qubit <code>qr[0]</code>, which represents Alice's message qubit[cite: 67, 68].  A barrier is used to visually separate this initialization step from the rest of the protocol[cite: 70, 71].</p>
+<p>A random one-qubit quantum state, <code>psi</code>, is generated. This state acts as the unknown quantum information that Alice wants to teleport. The notebook then uses <code>array_to_latex</code> to display its mathematical representation and <code>plot_bloch_multivector</code> to visualize its position on a Bloch sphere[cite: 54, 56].</p>
+ <p>The state is then appended to the quantum circuit on qubit <code>qr[0]</code>, which represents Alice's message qubit[cite: 67, 68]. A barrier is used to visually separate this initialization step from the rest of the protocol[cite: 70, 71].</p>
 <p></p>
 
 <h4>4.2. Creating the Bell Pair</h4>
-<p>The <code>create_bell_pair</code> function is called to entangle Alice's second qubit (<code>qr[1]</code>) and Bob's qubit (<code>qr[2]</code>).  This pair, in a maximally entangled state, serves as the quantum channel for teleportation[cite: 77, 78, 79, 84]. A barrier is added after this step to mark the completion of the entanglement setup.</p>
+<p>The <code>create_bell_pair</code> function is called to entangle Alice's second qubit (<code>qr[1]</code>) and Bob's qubit (<code>qr[2]</code>). This pair, in a maximally entangled state, serves as the quantum channel for teleportation[cite: 77, 78, 79, 84]. A barrier is added after this step to mark the completion of the entanglement setup.</p>
 <p></p>
 
 <h4>4.3. Alice's Entanglement and Measurement</h4>
- <p>Alice applies her gates using the <code>alice_gates</code> function, which entangles her message qubit (<code>qr[0]</code>) with her half of the Bell pair (<code>qr[1]</code>)[cite: 86, 89].  A measurement is then performed on these two qubits, and the classical results are stored and conceptually "sent" to Bob[cite: 100, 105].</p>
+ <p>Alice applies her gates using the <code>alice_gates</code> function, which entangles her message qubit (<code>qr[0]</code>) with her half of the Bell pair (<code>qr[1]</code>)[cite: 86, 89]. A measurement is then performed on these two qubits, and the classical results are stored and conceptually "sent" to Bob[cite: 100, 105].</p>
 <p></p>
 
 <h4>4.4. Bob's Corrections and Verification</h4>
-<p>Bob receives Alice's classical measurement outcomes. Based on these bits, the <code>bob_gates</code> function applies an X gate or a Z gate to his qubit (<code>qr[2]</code>) to perform the necessary corrections.  After these corrections, his qubit should now be in the exact state as Alice's original message qubit[cite: 112, 115, 117].</p>
-<p>To verify the success of the teleportation, the circuit prepares a final measurement step.  The inverse of the original initialization gate is applied to Bob's qubit[cite: 142]. If teleportation was successful, this operation should revert the qubit back to its ground state, $|0\rangle$.  The qubit is then measured to confirm that the outcome is indeed 0[cite: 156, 158, 161].</p>
+<p>Bob receives Alice's classical measurement outcomes. Based on these bits, the <code>bob_gates</code> function applies an X gate or a Z gate to his qubit (<code>qr[2]</code>) to perform the necessary corrections. After these corrections, his qubit should now be in the exact state as Alice's original message qubit[cite: 112, 115, 117].</p>
+<p>To verify the success of the teleportation, the circuit prepares a final measurement step. The inverse of the original initialization gate is applied to Bob's qubit[cite: 142]. If teleportation was successful, this operation should revert the qubit back to its ground state, $|0\rangle$. The qubit is then measured to confirm that the outcome is indeed 0[cite: 156, 158, 161].</p>
 <p></p>
 
 <h3>5. Simulation Results</h3>
-<p>The notebook runs the complete circuit on a QASM simulator to get realistic measurement outcomes. The simulation is run for 1024 shots to collect statistical data.  The results are presented in a histogram and a dictionary[cite: 164, 171, 174].</p>
+<p>The notebook runs the complete circuit on a QASM simulator to get realistic measurement outcomes. The simulation is run for 1024 shots to collect statistical data. The results are presented in a histogram and a dictionary[cite: 164, 171, 174].</p>
 <pre><code>{'0 0 1': 245, '0 0 0': 271, '0 1 0': 261, '0 1 1': 247}</code></pre>
-<p>The output dictionary shows that Bob's final measurement (represented by the first bit in the string) is always 0. The other two bits correspond to Alice's measurement outcomes.  The fact that the first bit is consistently 0 across all shots confirms that the teleportation was successful, as Bob's qubit was correctly restored to its ground state after the inverse initialization gate was applied[cite: 186, 188, 189].</p>
+<p>The output dictionary shows that Bob's final measurement (represented by the first bit in the string) is always 0. The other two bits correspond to Alice's measurement outcomes. The fact that the first bit is consistently 0 across all shots confirms that the teleportation was successful, as Bob's qubit was correctly restored to its ground state after the inverse initialization gate was applied[cite: 186, 188, 189].</p>
 <p></p>
 
 </body>
