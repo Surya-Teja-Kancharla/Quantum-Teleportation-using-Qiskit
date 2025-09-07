@@ -128,10 +128,11 @@ qc.draw('mpl')</code></pre>
 alice_gates(qc, 0, 1)
 qc.draw('mpl')
 
-
+  
 \# Step 3: Measure and send
 measure_and_send(qc, 0, 1)
 qc.draw('mpl')</code></pre>
+
 
 <h4>4.4. Bob's Corrections and Verification</h4>
 <p>Bob applies corrections using Alice's classical bits. The inverse of the initialization gate is applied to verify successful teleportation.</p>
