@@ -62,7 +62,8 @@ from qiskit.quantum_info import random_statevector</code></pre>
 <hr>
 
 <h3>3. Helper Functions</h3>
-<p>The notebook defines a set of helper functions that implement the core steps of the quantum teleportation protocol.  This modular approach makes the main circuit easier to read and understand[cite: 30, 31].</p>
+<p>The notebook defines a set of helper functions that implement the core steps of the quantum teleportation protocol. This modular approach makes the main circuit easier to read and understand [cite: 30, 31].</p>
+
 <pre><code># Define helper functions
 def create_bell_pair(qc, a, b):
     """Creates a bell pair in qc using qubits a & b"""
@@ -70,37 +71,41 @@ def create_bell_pair(qc, a, b):
     qc.cx(a, b)
 
 def alice_gates(qc, psi, a):
-qc.cx(psi, a)
-qc.h(psi)
+    qc.cx(psi, a)
+    qc.h(psi)
 
 def measure_and_send(qc, a, b):
-"""Measures qubits a & b"""
-qc.barrier()
-qc.measure(a, 0)
-qc.measure(b, 1)
+    """Measures qubits a & b"""
+    qc.barrier()
+    qc.measure(a, 0)
+    qc.measure(b, 1)
 
 def bob_gates(qc, qubit, crz, crx):
-"""
-Applies conditional gates to the qubit
-based on the classical registers' values.
-"""
-with qc.if_test((crx, 1)):
-qc.x(qubit)
-
+    """
+    Applies conditional gates to the qubit
+    based on the classical registers' values.
+    """
+    with qc.if_test((crx, 1)):
+        qc.x(qubit)
     with qc.if_test((crz, 1)):
         qc.z(qubit)
 
 def new_bob_gates(qc, a, b, c):
-"""For alternate formulation"""
-qc.cx(b, c)
-qc.cz(a, c)</code></pre>
+    """For alternate formulation"""
+    qc.cx(b, c)
+    qc.cz(a, c)
+</code></pre>
 
 <ul>
-<li><strong><code>create_bell_pair(qc, a, b)</code></strong>: This function creates a maximally entangled **Bell pair** between two qubits, `a` and `b`.  It first applies a **Hadamard (H) gate** to qubit `a` to put it into a superposition[cite: 33].  Then, it uses a **controlled-NOT (CX) gate** with `a` as the control and `b` as the target to entangle them[cite: 34].  This results in a Bell state, which is a maximally entangled state[cite: 32, 35].</li>
-<li><strong><code>alice_gates(qc, psi, a)</code></strong>: This function represents Alice's part of the protocol.  It applies a CNOT gate with the message qubit `psi` as the control and her half of the Bell pair, `a`, as the target[cite: 37]. It then applies a Hadamard gate to `psi`.  These gates entangle the message qubit with the Bell pair, spreading the quantum information across the system[cite: 38].</li>
-<li><strong><code>measure_and_send(qc, a, b)</code></strong>: Alice's measurement step.  This function places a barrier and then measures her two qubits, `a` and `b`, storing the classical outcomes in two different classical registers[cite: 39].  These classical bits are then sent to Bob, which is the "classical communication" step of teleportation[cite: 40].</li>
-<li><strong><code>bob_gates(qc, qubit, crz, crx)</code></strong>: Bob's correction step.  Based on the classical bits sent by Alice (`crz` and `crx`), Bob applies conditional gates to his entangled qubit[cite: 41].  It applies an **X gate** if `crx` is 1 and a **Z gate** if `crz` is 1[cite: 42].  These corrections ensure Bob's qubit becomes an exact replica of Alice's original state[cite: 43].</li>
- <li><strong><code>new_bob_gates(qc, a, b, c)</code></strong>: This is an alternative, more compact implementation of Bob's corrections that uses controlled gates (**CNOT** and **CZ**) instead of conditional classical logic[cite: 44, 45, 46].</li>
+    <li><strong><code>create_bell_pair(qc, a, b)</code></strong>: This function creates a maximally entangled <strong>Bell pair</strong> between two qubits, `a` and `b`. It first applies a <strong>Hadamard (H) gate</strong> to qubit `a` to put it into a superposition [cite: 33]. Then, it uses a <strong>controlled-NOT (CX) gate</strong> with `a` as the control and `b` as the target to entangle them [cite: 34]. This results in a Bell state, which is a maximally entangled state [cite: 32, 35].</li>
+
+    <li><strong><code>alice_gates(qc, psi, a)</code></strong>: This function represents Alice's part of the protocol. It applies a CNOT gate with the message qubit `psi` as the control and her half of the Bell pair, `a`, as the target [cite: 37]. It then applies a Hadamard gate to `psi`. These gates entangle the message qubit with the Bell pair, spreading the quantum information across the system [cite: 38].</li>
+
+    <li><strong><code>measure_and_send(qc, a, b)</code></strong>: Alice's measurement step. This function places a barrier and then measures her two qubits, `a` and `b`, storing the classical outcomes in two different classical registers [cite: 39]. These classical bits are then sent to Bob, which is the "classical communication" step of teleportation [cite: 40].</li>
+
+    <li><strong><code>bob_gates(qc, qubit, crz, crx)</code></strong>: Bob's correction step. Based on the classical bits sent by Alice (`crz` and `crx`), Bob applies conditional gates to his entangled qubit [cite: 41]. It applies an <strong>X gate</strong> if `crx` is 1 and a <strong>Z gate</strong> if `crz` is 1 [cite: 42]. These corrections ensure Bob's qubit becomes an exact replica of Alice's original state [cite: 43].</li>
+
+    <li><strong><code>new_bob_gates(qc, a, b, c)</code></strong>: This is an alternative, more compact implementation of Bob's corrections that uses controlled gates (<strong>CNOT</strong> and <strong>CZ</strong>) instead of conditional classical logic [cite: 44, 45, 46].</li>
 </ul>
 
 <hr>
